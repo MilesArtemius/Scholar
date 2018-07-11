@@ -11,7 +11,7 @@ import javafx.scene.control.TextField;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.text.Text;
 
-public class SignIn {
+public class SignIn {//
     @FXML
     private Text dialog_text;
 
