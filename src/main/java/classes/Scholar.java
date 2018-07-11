@@ -3,8 +3,10 @@ package classes;
 import classes.utils.ScLog;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
+import javafx.geometry.Rectangle2D;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.stage.Screen;
 import javafx.stage.Stage;
 
 public class Scholar extends Application {
@@ -19,10 +21,10 @@ public class Scholar extends Application {
         primaryStage.setTitle("Scholar " + version);
         primaryStage.setResizable(false);
 
-        Prefs.pull().setBoolean(Prefs.keySecured, true);
+        Prefs.pull().setBoolean(UserInfo.secure_key, false);
 
         boolean initialized = Prefs.pull().getBoolean(Prefs.keyInit, false);
-        boolean secured = Prefs.pull().getBoolean(Prefs.keySecured, false);
+        boolean secured = Prefs.pull().getBoolean(UserInfo.secure_key, false);
 
         if (!initialized) {
             change("/layouts/initialization.fxml", 600, 400);

@@ -9,7 +9,6 @@ public class Prefs {
     private Preferences prefs;
 
     public static final String keyInit = "KEY_INIT";
-    public static final String keySecured = "KEY_SECURED";
 
 
 
