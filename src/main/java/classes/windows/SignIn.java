@@ -1,13 +1,11 @@
 package classes.windows;
 
-import classes.Prefs;
+import classes.dataholders.Prefs;
 import classes.Scholar;
-import classes.UserInfo;
 import classes.utils.HashFunction;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
-import javafx.scene.control.Button;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.text.Text;
 
@@ -47,6 +45,7 @@ public class SignIn {
         password_text.setText("Password");
 
         submit_button.setText("Submit");
+
         submit_button.setOnMouseClicked(new EventHandler<MouseEvent>() {
             @Override
             public void handle(MouseEvent event) {
@@ -54,10 +53,10 @@ public class SignIn {
                 password_field.setEditable(false);
 
                 String enteredHash = HashFunction.f(password_field.getCharacters().toString());
-                String passwordHash = Prefs.pull().getString(UserInfo.passwordHash_key, "");
+                String passwordHash = Prefs.pull().getString(Prefs.passwordHash_key, "");
 
                 if ((enteredHash.equals(passwordHash)) || (passwordHash.equals(""))) {
-                    Scholar.change("/layouts/workplace.fxml", true);
+                    Scholar.change("/layouts/workplace.fxml");
 
                     if (passwordHash.equals("")) {
 

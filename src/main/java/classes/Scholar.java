@@ -1,16 +1,16 @@
 package classes;
 
+import classes.dataholders.MediaBase;
+import classes.dataholders.Prefs;
 import classes.utils.ScLog;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
-import javafx.geometry.Rectangle2D;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Screen;
 import javafx.stage.Stage;
 
 public class Scholar extends Application {
-
     private static Stage current;
 
     @Override
@@ -19,19 +19,20 @@ public class Scholar extends Application {
 
         String version = getClass().getPackage().getImplementationVersion() == null ? "INDEV" : getClass().getPackage().getImplementationVersion();
         primaryStage.setTitle("Scholar " + version);
-        primaryStage.setResizable(false);
+        //primaryStage.setResizable(false);
 
-        Prefs.pull().setBoolean(UserInfo.secure_key, false);
+        //Prefs.pull().setBoolean(Prefs.init_key, false);
+        MediaBase.load();
 
-        boolean initialized = Prefs.pull().getBoolean(Prefs.keyInit, false);
-        boolean secured = Prefs.pull().getBoolean(UserInfo.secure_key, false);
+        boolean initialized = Prefs.pull().getBoolean(Prefs.init_key, false);
+        boolean secured = Prefs.pull().getBoolean(Prefs.secure_key, false);
 
         if (!initialized) {
             change("/layouts/initialization.fxml", 600, 400);
         } else if (secured) {
             change("/layouts/signin.fxml", 500, 200);
         } else {
-            change("/layouts/workplace.fxml", true);
+            change("/layouts/workplace.fxml");
         }
         primaryStage.show();
     }
@@ -46,7 +47,7 @@ public class Scholar extends Application {
 
 
 
-    public static void change(String resourceName, boolean isMaximized) {
+    public static void change(String resourceName) {
         change(resourceName, 100, 100, true);
     }
 
@@ -59,7 +60,11 @@ public class Scholar extends Application {
             Parent root = FXMLLoader.load(Prefs.pull().getClass().getResource(resourceName));
             Scene scene = new Scene(root, width, height);
             current.setScene(scene);
+            current.sizeToScene();
             current.setMaximized(isMaximized);
+            current.setResizable(isMaximized);
+            current.setMinHeight(Screen.getPrimary().getVisualBounds().getHeight() / 2);
+            current.setMinWidth(Screen.getPrimary().getVisualBounds().getWidth() / 2);
         } catch (Exception e) {
             e.printStackTrace();
             ScLog.out("Scene can not be changed");

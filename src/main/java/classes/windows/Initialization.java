@@ -1,8 +1,8 @@
 package classes.windows;
 
-import classes.Prefs;
+import classes.dataholders.Prefs;
 import classes.Scholar;
-import classes.UserInfo;
+import classes.dataholders.UserInfo;
 import classes.utils.Bundle;
 import classes.utils.HashFunction;
 import javafx.beans.value.ChangeListener;
@@ -129,19 +129,17 @@ public class Initialization {
                 password_field.setEditable(false);
                 repet_field.setEditable(false);
 
-                Bundle bundle = new Bundle();
-                bundle.put(UserInfo.name_key, name_field.getCharacters().toString());
-                bundle.put(UserInfo.email_key, email_field.getCharacters().toString());
-                bundle.put(UserInfo.subject_key, ult_const);
-                bundle.put(UserInfo.secure_key, secure_box.isSelected());
-                bundle.put(UserInfo.login_key, login_field.getCharacters().toString());
-                bundle.put(UserInfo.passwordHash_key, HashFunction.f(name_field.getCharacters().toString()));
+                Bundle<String, Object> bundle = new Bundle<String, Object>();
+                bundle.put(Prefs.name_key, name_field.getCharacters().toString());
+                bundle.put(Prefs.email_key, email_field.getCharacters().toString());
+                bundle.put(Prefs.subject_key, ult_const);
+                bundle.put(Prefs.secure_key, secure_box.isSelected());
+                bundle.put(Prefs.login_key, login_field.getCharacters().toString());
+                bundle.put(Prefs.passwordHash_key, HashFunction.f(name_field.getCharacters().toString()));
 
-                UserInfo.get().update(bundle);
+                UserInfo.get().updatePerson(bundle);
 
-                Prefs.pull().setBoolean(Prefs.keyInit, true);
-
-                Scholar.change("/layouts/workplace.fxml", true);
+                Scholar.change("/layouts/treebuilder.fxml", 600, 400);
             }
         });
     }

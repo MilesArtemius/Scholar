@@ -1,10 +1,18 @@
 package classes.utils;
 
 import java.util.HashMap;
+import java.util.Map;
 
-public class Bundle extends HashMap {
+public class Bundle<K,V> extends HashMap<K,V> {
 
-    public static Bundle collect(Object[] keys, Object[] values) {
+    public Bundle(Map<? extends K, ? extends V> m) {
+        super(m);
+    }
+
+    public Bundle() {
+    }
+
+    public static Bundle<String, String> collectStringBundle(String[] keys, String[] values) {
         Bundle bundle = new Bundle();
         if (keys.length == values.length) {
             for (int i = 0; i < keys.length; i++) {
@@ -21,7 +29,7 @@ public class Bundle extends HashMap {
 
     public boolean getBoolean(String key, boolean def) {
         try {
-            return (boolean) this.get(key);
+            return ((Boolean) this.get(key)).booleanValue();
         } catch (Exception e) {
             return def;
         }
@@ -29,7 +37,7 @@ public class Bundle extends HashMap {
 
     public String getString(String key, String def) {
         try {
-            return (String) this.get(key);
+            return this.get(key).toString();
         } catch (Exception e) {
             return def;
         }
