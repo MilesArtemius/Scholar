@@ -29,8 +29,10 @@ public class InternetPassage {
 
     public static String storageSeparator = "/";
 
-    private static final String data_doc       = "data";
-    private static final String projects_doc   = "projects";
+    private static final String teachers_collection       = "teachers";
+    private static final String students_collection       = "students";
+
+    private static final String info_key                  = "info";
 
     private boolean connected = false;
 
@@ -71,7 +73,9 @@ public class InternetPassage {
 
     public void updateInfo(Bundle<String, String> bundle) {
         try {
-            ApiFuture<WriteResult> result = db.collection(UserInfo.get().email).document(data_doc).set(bundle, SetOptions.merge());
+            Bundle<String, Object> piece = new Bundle<>();
+            piece.put(info_key, bundle);
+            ApiFuture<WriteResult> result = db.collection(teachers_collection).document(UserInfo.get().email).set(piece, SetOptions.merge());
             ScLog.out("Successfully updated in " + result.get().getUpdateTime());
         } catch (Exception e) {
             ScLog.out("Can not be updated. For some reason.");

@@ -19,9 +19,8 @@ public class Scholar extends Application {
 
         String version = getClass().getPackage().getImplementationVersion() == null ? "INDEV" : getClass().getPackage().getImplementationVersion();
         primaryStage.setTitle("Scholar " + version);
-        //primaryStage.setResizable(false);
 
-        //Prefs.pull().setBoolean(Prefs.init_key, false);
+        Prefs.pull().setBoolean(Prefs.init_key, false);
         MediaBase.load();
 
         boolean initialized = Prefs.pull().getBoolean(Prefs.init_key, false);
